@@ -42,3 +42,31 @@
     $("#frequency").val("");
     
   });
+
+database.ref().orderByChild("dateAdded").on("child_added", function(snapshot){
+  console.log(snapshot);
+  var trainTable = $("<tr>");
+  var trainNameRow = $("<td>");
+  var destinationRow = $("<td>");
+  var trainStartRow = $("<td>");
+  var frequencyRow = $("<td>");
+
+  //Adding the Train Names to the page on load
+  trainNameRow.text(snapshot.val().train);
+  trainTable.append(trainNameRow);
+  $("#train-table").append(trainTable);
+
+  //Adding the destination
+  destinationRow.text(snapshot.val().destination);
+  trainTable.append(destinationRow);
+
+  //adding frequency
+  frequencyRow.text(snapshot.val().frequency);
+  trainTable.append(frequencyRow);
+
+
+
+
+
+
+})
