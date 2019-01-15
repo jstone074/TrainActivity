@@ -11,6 +11,19 @@
 
   var database = firebase.database();
 
+  //Moment Variables
+  // var randomTime = "08:00";
+  // var randTime2 = "18:00";
+  // var randomFormat = "HH:mm";
+  // var convertedDate = moment(randomTime,randomFormat).format('hh:mm a');
+  // var convertedDate2 = moment(randTime2,randomFormat).format('hh:mm a');
+  // var newTime = moment().subtract(convertedDate,convertedDate2).format('hh:mm a');
+
+  //console.log(convertedDate);
+  // console.log(convertedDate);
+  // console.log(convertedDate2);
+  // console.log(newTime);
+
   $(document).on("click","#submit", function() {
 
     // verifying that the onclick submit button works
@@ -48,8 +61,9 @@ database.ref().orderByChild("dateAdded").on("child_added", function(snapshot){
   var trainTable = $("<tr>");
   var trainNameRow = $("<td>");
   var destinationRow = $("<td>");
-  var trainStartRow = $("<td>");
+  var nextArrivalRow = $("<td>");
   var frequencyRow = $("<td>");
+  var minutesAway = $("<td>");
 
   //Adding the Train Names to the page on load
   trainNameRow.text(snapshot.val().train);
@@ -64,9 +78,23 @@ database.ref().orderByChild("dateAdded").on("child_added", function(snapshot){
   frequencyRow.text(snapshot.val().frequency);
   trainTable.append(frequencyRow);
 
+  //Moment for time converstion
+  var firstTimeConverted = moment(snapshot.val().trainStart,"HH:mm");
+  var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+  var tFrequency = parseInt(snapshot.val().frequency);
+  var timeRemainder = diffTime % tFrequency;
+  var tMinutesTillTrain = tFrequency - timeRemainder;
+  console.log("Minutes til Train " + tMinutesTillTrain);
+  var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+  console.log("Arrival Time " + moment(nextTrain).format("hh:mm"));
+  
+  //Adding Next Arrival
+  nextArrivalRow.text(moment(nextTrain).format("hh:mm"));
+  trainTable.append(nextArrivalRow);
 
-
-
+  //Minutes Away
+  minutesAway.text(tMinutesTillTrain);
+  trainTable.append(minutesAway);
 
 
 })
