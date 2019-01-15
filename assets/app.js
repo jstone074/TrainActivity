@@ -11,19 +11,6 @@
 
   var database = firebase.database();
 
-  //Moment Variables
-  // var randomTime = "08:00";
-  // var randTime2 = "18:00";
-  // var randomFormat = "HH:mm";
-  // var convertedDate = moment(randomTime,randomFormat).format('hh:mm a');
-  // var convertedDate2 = moment(randTime2,randomFormat).format('hh:mm a');
-  // var newTime = moment().subtract(convertedDate,convertedDate2).format('hh:mm a');
-
-  //console.log(convertedDate);
-  // console.log(convertedDate);
-  // console.log(convertedDate2);
-  // console.log(newTime);
-
   $(document).on("click","#submit", function() {
 
     // verifying that the onclick submit button works
