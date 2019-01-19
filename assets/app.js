@@ -15,7 +15,6 @@ $(document).on("click", "#submit", function () {
 
   // verifying that the onclick submit button works
   console.log("clicking submit button");
-
   // Grabbing the values for the train fields
   var newtrainName = $("#trainName").val().trim();
   var newdestination = $("#destination").val().trim();
@@ -43,6 +42,15 @@ $(document).on("click", "#submit", function () {
 
 });
 
+$(document).on("click", ".btn-danger", function () {
+
+  // var key = $(this).attr("data-id");
+  console.log($(this).attr("data-id"));
+  
+  firebase.database().ref().child($(this).attr("data-id")).remove();
+
+});
+
 //Setting up an interval to refresh the page every second so no user interaction is needed
 setInterval(function () {
 
@@ -56,6 +64,7 @@ setInterval(function () {
   var nextArrivalHeader = $("<th>");
   var frequencyeader = $("<th>");
   var minutesHeader = $("<th>");
+  var removeButtonHeader = $("<th>");
 
   //Adds the table headers back after the interval clears the existing headers
   trainNameHeader.text("Train Name");
@@ -74,8 +83,10 @@ setInterval(function () {
   minutesHeader.text("Minutes Away");
   trainTableHeader.append(minutesHeader);
 
+  trainTableHeader.append(removeButtonHeader);
+
   database.ref().orderByChild("dateAdded").on("child_added", function (snapshot) {
-    console.log(snapshot);
+    console.log(snapshot.key);
 
     var trainTable = $("<tr>");
     var trainNameRow = $("<td>");
@@ -83,6 +94,7 @@ setInterval(function () {
     var nextArrivalRow = $("<td>");
     var frequencyRow = $("<td>");
     var minutesAway = $("<td>");
+    var removeButtonRow = $("<td>");
 
     //Adding the Train Names to the page on load
     trainNameRow.text(snapshot.val().train);
@@ -114,6 +126,12 @@ setInterval(function () {
     //Minutes Away
     minutesAway.text(tMinutesTillTrain);
     trainTable.append(minutesAway);
+
+    //Adding Remove Button
+    trainTable.append(removeButtonRow);
+    $(removeButtonRow).addClass("btn btn-danger");
+    $(removeButtonRow).attr("data-id",snapshot.key);
+    $(removeButtonRow).text("Remove");
 
 
   })
