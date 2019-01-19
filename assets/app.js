@@ -14,7 +14,7 @@ var database = firebase.database();
 $(document).on("click", "#submit", function () {
 
   // verifying that the onclick submit button works
-  console.log("clicking submit button");
+  // console.log("clicking submit button");
   // Grabbing the values for the train fields
   var newtrainName = $("#trainName").val().trim();
   var newdestination = $("#destination").val().trim();
@@ -45,8 +45,8 @@ $(document).on("click", "#submit", function () {
 $(document).on("click", ".btn-danger", function () {
 
   // var key = $(this).attr("data-id");
-  console.log($(this).attr("data-id"));
-  
+  // console.log($(this).attr("data-id"));
+
   firebase.database().ref().child($(this).attr("data-id")).remove();
 
 });
@@ -86,7 +86,7 @@ setInterval(function () {
   trainTableHeader.append(removeButtonHeader);
 
   database.ref().orderByChild("dateAdded").on("child_added", function (snapshot) {
-    console.log(snapshot.key);
+    // console.log(snapshot.key);
 
     var trainTable = $("<tr>");
     var trainNameRow = $("<td>");
@@ -115,9 +115,9 @@ setInterval(function () {
     //var tFrequency = parseInt(snapshot.val().frequency);
     var timeRemainder = diffTime % snapshot.val().frequency;
     var tMinutesTillTrain = snapshot.val().frequency - timeRemainder;
-    console.log("Minutes til Train " + tMinutesTillTrain);
+    // console.log("Minutes til Train " + tMinutesTillTrain);
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("Arrival Time " + moment(nextTrain).format("hh:mm"));
+    // console.log("Arrival Time " + moment(nextTrain).format("hh:mm"));
 
     //Adding Next Arrival
     nextArrivalRow.text(moment(nextTrain).format("hh:mm"));
@@ -130,7 +130,7 @@ setInterval(function () {
     //Adding Remove Button
     trainTable.append(removeButtonRow);
     $(removeButtonRow).addClass("btn btn-danger");
-    $(removeButtonRow).attr("data-id",snapshot.key);
+    $(removeButtonRow).attr("data-id", snapshot.key);
     $(removeButtonRow).text("Remove");
 
 
