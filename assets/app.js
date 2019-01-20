@@ -31,6 +31,7 @@ $(document).on("click", "#submit", function () {
 
     });
 
+    $("#train-table").empty();
   };
 
   trainData(newtrainName, newdestination, newtrainStart, newfrequency);
@@ -42,6 +43,7 @@ $(document).on("click", "#submit", function () {
 
 });
 
+//Remove Button Function
 $(document).on("click", ".btn-danger", function () {
 
   // var key = $(this).attr("data-id");
